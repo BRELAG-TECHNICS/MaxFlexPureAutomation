@@ -3,20 +3,12 @@
   [
     { "type": "NumberSpinner", "name": "ID", "caption": "ID"},
     { "type": "CheckBox", "name": "LED1", "caption": "LED 1 einschalten?"},
-    { "type": "CheckBox", "name": "SWITCHBUTTON1", "caption": "Taste 1 als Schalter?"},
     { "type": "CheckBox", "name": "LED2", "caption": "LED 2 einschalten?"},
-    { "type": "CheckBox", "name": "SWITCHBUTTON2", "caption": "Taste 2 als Schalter?"},
     { "type": "CheckBox", "name": "LED3", "caption": "LED 3 einschalten?"},
-    { "type": "CheckBox", "name": "SWITCHBUTTON3", "caption": "Taste 3 als Schalter?"},
     { "type": "CheckBox", "name": "LED4", "caption": "LED 4 einschalten?"},
-    { "type": "CheckBox", "name": "SWITCHBUTTON4", "caption": "Taste 4 als Schalter?"},
     { "type": "CheckBox", "name": "LED5", "caption": "LED 5 einschalten?"},
-    { "type": "CheckBox", "name": "SWITCHBUTTON5", "caption": "Taste 5 als Schalter?"},
     { "type": "CheckBox", "name": "LED6", "caption": "LED 6 einschalten?"},
-    { "type": "CheckBox", "name": "SWITCHBUTTON6", "caption": "Taste 6 als Schalter?"},
     { "type": "CheckBox", "name": "LED7", "caption": "LED 7 einschalten?"},
-    { "type": "CheckBox", "name": "SWITCHBUTTON7", "caption": "Taste 7 als Schalter?"},
-    { "type": "CheckBox", "name": "LED8", "caption": "LED 8 einschalten?"},
-    { "type": "CheckBox", "name": "SWITCHBUTTON8", "caption": "Taste 8 als Schalter?"}
+    { "type": "CheckBox", "name": "LED8", "caption": "LED 8 einschalten?"}
   ]
 }
