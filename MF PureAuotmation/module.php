@@ -34,7 +34,7 @@ class MaxFlexPureAutomation extends IPSModule {
 		$this->RegisterPropertyBoolean("SWITCHBUTTON4", false); // false = Button, true = switch
 		$this->RegisterPropertyBoolean("LED5", false); // If true turns the LED on after an action
 		$this->RegisterPropertyBoolean("SWITCHBUTTON5", false); // false = Button, true = switch
-		$this->RegisterPropertyBoolean("LED", false); // If true turns the LED on after an action
+		$this->RegisterPropertyBoolean("LED6", false); // If true turns the LED on after an action
 		$this->RegisterPropertyBoolean("SWITCHBUTTON6", false); // false = Button, true = switch
 		$this->RegisterPropertyBoolean("LED7", false); // If true turns the LED on after an action
 		$this->RegisterPropertyBoolean("SWITCHBUTTON7", false); // false = Button, true = switch
