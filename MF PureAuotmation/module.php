@@ -40,14 +40,14 @@ class MaxFlexPureAutomation extends IPSModule {
 		$this->RegisterPropertyBoolean("LED8", false); // If true turns the LED on after an action
 		$this->RegisterPropertyBoolean("SWITCHBUTTON8", false); // false = Button, true = switch
 		
-		$this->RegisterVariableBoolean("BUTTON1", $this->Translate("Button1"), "BRELAG.Switch", 1);
-		$this->RegisterVariableBoolean("BUTTON2", $this->Translate("Button2"), "BRELAG.Switch", 2);
-		$this->RegisterVariableBoolean("BUTTON3", $this->Translate("Button3"), "BRELAG.Switch", 3);
-		$this->RegisterVariableBoolean("BUTTON4", $this->Translate("Button4"), "BRELAG.Switch", 4);
-		$this->RegisterVariableBoolean("BUTTON5", $this->Translate("Button5"), "BRELAG.Switch", 5);
-		$this->RegisterVariableBoolean("BUTTON6", $this->Translate("Button6"), "BRELAG.Switch", 6);
-		$this->RegisterVariableBoolean("BUTTON7", $this->Translate("Button7"), "BRELAG.Switch", 7);
-		$this->RegisterVariableBoolean("BUTTON8", $this->Translate("Button8"), "BRELAG.Switch", 8);
+		$this->RegisterVariableInteger("BUTTON1", $this->Translate("Button1"), "BRELAG.Switch", 1);
+		$this->RegisterVariableInteger("BUTTON2", $this->Translate("Button2"), "BRELAG.Switch", 2);
+		$this->RegisterVariableInteger("BUTTON3", $this->Translate("Button3"), "BRELAG.Switch", 3);
+		$this->RegisterVariableInteger("BUTTON4", $this->Translate("Button4"), "BRELAG.Switch", 4);
+		$this->RegisterVariableInteger("BUTTON5", $this->Translate("Button5"), "BRELAG.Switch", 5);
+		$this->RegisterVariableInteger("BUTTON6", $this->Translate("Button6"), "BRELAG.Switch", 6);
+		$this->RegisterVariableInteger("BUTTON7", $this->Translate("Button7"), "BRELAG.Switch", 7);
+		$this->RegisterVariableInteger("BUTTON8", $this->Translate("Button8"), "BRELAG.Switch", 8);
 
 	}
 
@@ -79,67 +79,35 @@ class MaxFlexPureAutomation extends IPSModule {
 			if($command == 42) {
 					switch($value) {
 						case 1: // Button 1
-							if($value > 0) {
 								$this->changeButtonValue(1, true);
-							} else {
-								$this->changeButtonValue(1, false);
-							}
 						break;
 	
 						case 2: // Button 2
-							if($value > 0) {
 								$this->changeButtonValue(2, true);
-							} else {
-								$this->changeButtonValue(2, false);
-							}
 						break;
 	
 						case 4: // Button 3
-							if($value > 0) {
 								$this->changeButtonValue(3, true);
-							} else {
-								$this->changeButtonValue(3, false);
-							}
 						break;
 	
 						case 8: // Button 4
-							if($value > 0) {
 								$this->changeButtonValue(4, true);
-							} else {
-								$this->changeButtonValue(4, false);
-							}
 						break;
 	
 						case 16: // Button 5
-							if($value > 0) {
 								$this->changeButtonValue(5, true);
-							} else {
-								$this->changeButtonValue(5, false);
-							}
 						break;
 	
 						case 32: // Button 6
-							if($value > 0) {
 								$this->changeButtonValue(6, true);
-							} else {
-								$this->changeButtonValue(6, false);
-							}
 						break;
 	
 						case 64: // Button 7
-							if($value > 0) {
 								$this->changeButtonValue(7, true);
-							} else {
-								$this->changeButtonValue(7, false);
-							}
 						break;
 	
 						case 128: // Button 8
-							if($value > 0) {
 								$this->changeButtonValue(8, true);
-							} else {
-								$this->changeButtonValue(8, false);
-							}
 						break;
 					}
 			}
