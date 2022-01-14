@@ -151,13 +151,11 @@ class MaxFlexPureAutomation extends IPSModule {
 		$button = "BUTTON" . $buttonNumber;
 		$LEDlight = "LED" . $buttonNumber;
 		SetValue($this->GetIDForIdent($button), $value);
-		if(GetValue($this->ReadPropertyBoolean($LEDlight))) {
 			if(GetValue($this->GetIDForIdent($button))) {
 				$this->SwitchLED($buttonNumber, self::LED_ON);
 			} else {
 				$this->SwitchLED($buttonNumber, self::LED_OFF);
 			}
-		}
 	}
 
 	private function SwitchLED(int $LEDnumber, int $State) {
