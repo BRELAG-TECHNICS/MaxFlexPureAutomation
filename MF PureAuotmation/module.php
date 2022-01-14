@@ -40,14 +40,14 @@ class MaxFlexPureAutomation extends IPSModule {
 		$this->RegisterPropertyBoolean("LED8", false); // If true turns the LED on after an action
 		$this->RegisterPropertyBoolean("SWITCHBUTTON8", false); // false = Button, true = switch
 		
-		$this->RegisterVariableInteger("BUTTON1", $this->Translate("Button1"), "", 1);
-		$this->RegisterVariableInteger("BUTTON2", $this->Translate("Button2"), "", 2);
-		$this->RegisterVariableInteger("BUTTON3", $this->Translate("Button3"), "", 3);
-		$this->RegisterVariableInteger("BUTTON4", $this->Translate("Button4"), "", 4);
-		$this->RegisterVariableInteger("BUTTON5", $this->Translate("Button5"), "", 5);
-		$this->RegisterVariableInteger("BUTTON6", $this->Translate("Button6"), "", 6);
-		$this->RegisterVariableInteger("BUTTON7", $this->Translate("Button7"), "", 7);
-		$this->RegisterVariableInteger("BUTTON8", $this->Translate("Button8"), "", 8);
+		$this->RegisterVariableBoolean("BUTTON1", $this->Translate("Button1"), "BRELAG.Switch", 1);
+		$this->RegisterVariableBoolean("BUTTON2", $this->Translate("Button2"), "BRELAG.Switch", 2);
+		$this->RegisterVariableBoolean("BUTTON3", $this->Translate("Button3"), "BRELAG.Switch", 3);
+		$this->RegisterVariableBoolean("BUTTON4", $this->Translate("Button4"), "BRELAG.Switch", 4);
+		$this->RegisterVariableBoolean("BUTTON5", $this->Translate("Button5"), "BRELAG.Switch", 5);
+		$this->RegisterVariableBoolean("BUTTON6", $this->Translate("Button6"), "BRELAG.Switch", 6);
+		$this->RegisterVariableBoolean("BUTTON7", $this->Translate("Button7"), "BRELAG.Switch", 7);
+		$this->RegisterVariableBoolean("BUTTON8", $this->Translate("Button8"), "BRELAG.Switch", 8);
 
 	}
 
@@ -79,51 +79,57 @@ class MaxFlexPureAutomation extends IPSModule {
 			if($command == 42) {
 					switch($value) {
 						case 1: // Button 1
-								$this->changeButtonValue(1, true);
+								$this->changeButtonValue(1);
 						break;
 	
 						case 2: // Button 2
-								$this->changeButtonValue(2, true);
+								$this->changeButtonValue(2);
 						break;
 	
 						case 4: // Button 3
-								$this->changeButtonValue(3, true);
+								$this->changeButtonValue(3);
 						break;
 	
 						case 8: // Button 4
-								$this->changeButtonValue(4, true);
+								$this->changeButtonValue(4);
 						break;
 	
 						case 16: // Button 5
-								$this->changeButtonValue(5, true);
+								$this->changeButtonValue(5);
 						break;
 	
 						case 32: // Button 6
-								$this->changeButtonValue(6, true);
+								$this->changeButtonValue(6);
 						break;
 	
 						case 64: // Button 7
-								$this->changeButtonValue(7, true);
+								$this->changeButtonValue(7);
 						break;
 	
 						case 128: // Button 8
-								$this->changeButtonValue(8, true);
+								$this->changeButtonValue(8);
 						break;
 					}
 			}
 		}
 	}
 
-	public function changeButtonValue($buttonNumber, $value) {
+	public function changeButtonValue($buttonNumber) {
 		$switch_button = "SWITCHBUTTON" . $buttonNumber;
 		$button = "BUTTON" . $buttonNumber;
 		$LEDlight = "LED" . $buttonNumber;
-		SetValue($this->GetIDForIdent($button), $value);
+
+		if(GetValue($this->GetIDForIdent($button))) {
+			SetValue($this->GetIDForIdent($button), false);
+			if(GetValue($this->GetIDForIdent($button))) {
+				$this->SwitchLED($buttonNumber, self::LED_OFF);
+			} 
+		} else {
+			SetValue($this->GetIDForIdent($button), true);
 			if(GetValue($this->GetIDForIdent($button))) {
 				$this->SwitchLED($buttonNumber, self::LED_ON);
-			} else {
-				$this->SwitchLED($buttonNumber, self::LED_OFF);
-			}
+			} 
+		}
 	}
 
 	private function SwitchLED(int $LEDnumber, int $State) {
