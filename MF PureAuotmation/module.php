@@ -24,21 +24,21 @@ class MaxFlexPureAutomation extends IPSModule {
 
 		$this->RegisterPropertyInteger("ID", 1);
 		$this->RegisterPropertyBoolean("LED1", false); // If true turns the LED on after an action
-		$this->RegisterPropertyBoolean("SWITCHBUTTON1", false); // false = Button, true = switch
+		//$this->RegisterPropertyBoolean("SWITCHBUTTON1", false); // false = Button, true = switch
 		$this->RegisterPropertyBoolean("LED2", false); // If true turns the LED on after an action
-		$this->RegisterPropertyBoolean("SWITCHBUTTON2", false); // false = Button, true = switch
+		//$this->RegisterPropertyBoolean("SWITCHBUTTON2", false); // false = Button, true = switch
 		$this->RegisterPropertyBoolean("LED3", false); // If true turns the LED on after an action
-		$this->RegisterPropertyBoolean("SWITCHBUTTON3", false); // false = Button, true = switch
+		//$this->RegisterPropertyBoolean("SWITCHBUTTON3", false); // false = Button, true = switch
 		$this->RegisterPropertyBoolean("LED4", false); // If true turns the LED on after an action
-		$this->RegisterPropertyBoolean("SWITCHBUTTON4", false); // false = Button, true = switch
+		//$this->RegisterPropertyBoolean("SWITCHBUTTON4", false); // false = Button, true = switch
 		$this->RegisterPropertyBoolean("LED5", false); // If true turns the LED on after an action
-		$this->RegisterPropertyBoolean("SWITCHBUTTON5", false); // false = Button, true = switch
+		//$this->RegisterPropertyBoolean("SWITCHBUTTON5", false); // false = Button, true = switch
 		$this->RegisterPropertyBoolean("LED6", false); // If true turns the LED on after an action
-		$this->RegisterPropertyBoolean("SWITCHBUTTON6", false); // false = Button, true = switch
+		//$this->RegisterPropertyBoolean("SWITCHBUTTON6", false); // false = Button, true = switch
 		$this->RegisterPropertyBoolean("LED7", false); // If true turns the LED on after an action
-		$this->RegisterPropertyBoolean("SWITCHBUTTON7", false); // false = Button, true = switch
+		//$this->RegisterPropertyBoolean("SWITCHBUTTON7", false); // false = Button, true = switch
 		$this->RegisterPropertyBoolean("LED8", false); // If true turns the LED on after an action
-		$this->RegisterPropertyBoolean("SWITCHBUTTON8", false); // false = Button, true = switch
+		//$this->RegisterPropertyBoolean("SWITCHBUTTON8", false); // false = Button, true = switch
 		
 		$this->RegisterVariableBoolean("BUTTON1", $this->Translate("Button1"), "BRELAG.Switch", 1);
 		$this->RegisterVariableBoolean("BUTTON2", $this->Translate("Button2"), "BRELAG.Switch", 2);
@@ -121,14 +121,14 @@ class MaxFlexPureAutomation extends IPSModule {
 
 		if(GetValue($this->GetIDForIdent($button))) {
 			SetValue($this->GetIDForIdent($button), false);
-			if(GetValue($this->ReadPropertyBoolean($LEDlight))) {
+			//if(GetValue($this->ReadPropertyBoolean($LEDlight))) {
 				$this->SwitchLED($buttonNumber, self::LED_OFF);
-			} 
+			//} 
 		} else {
 			SetValue($this->GetIDForIdent($button), true);
-			if(GetValue($this->ReadPropertyBoolean($LEDlight))) {
+			//if(GetValue($this->ReadPropertyBoolean($LEDlight))) {
 				$this->SwitchLED($buttonNumber, self::LED_ON);
-			} 
+			//} 
 		}
 	}
 
