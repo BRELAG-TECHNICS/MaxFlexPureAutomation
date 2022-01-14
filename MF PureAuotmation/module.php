@@ -115,32 +115,32 @@ class MaxFlexPureAutomation extends IPSModule {
 		}
 	}
 
-	public function changeButtonValue($button, $value) {
-		$switch_button = "SWITCHBUTTON" . $button;
-		$button = "BUTTON" . $button;
-		$LEDlight = "LED" . $button;
+	public function changeButtonValue($buttonNumber, $value) {
+		$switch_button = "SWITCHBUTTON" . $buttonNumber;
+		$button = "BUTTON" . $buttonNumber;
+		$LEDlight = "LED" . $buttonNumber;
 			if($this->ReadPropertyBoolean($switch_button)) {
 				if(GetValue($this->GetIDForIdent($button))) {
 					SetValue($this->GetIDForIdent($button), false);
 					if($this->ReadPropertyInteger($LEDlight)) {
-						$this->SwitchLED($button, self::LED_OFF);
+						$this->SwitchLED($buttonNumber, self::LED_OFF);
 					}
 				} else {
 					SetValue($this->GetIDForIdent($button), true);
 					if($this->ReadPropertyInteger($LEDlight)) {
-						$this->SwitchLED($button, self::LED_ON);
+						$this->SwitchLED($buttonNumber, self::LED_ON);
 					}
 				}
 			} else {
 				if($value >= 0) {
 					SetValue($this->GetIDForIdent($button), true);
 					if($this->ReadPropertyBoolean($LEDlight)) {
-						$this->SwitchLED($button, self::LED_ON);
+						$this->SwitchLED($buttonNumber, self::LED_ON);
 					}
 				} else {
 					SetValue($this->GetIDForIdent($button), false);
 					if($this->ReadPropertyBoolean($LEDlight)) {
-						$this->SwitchLED($button, self::LED_OFF);
+						$this->SwitchLED($buttonNumber, self::LED_OFF);
 					}
 				}
 			}
