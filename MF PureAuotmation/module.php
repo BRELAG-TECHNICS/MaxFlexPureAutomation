@@ -134,12 +134,12 @@ class MaxFlexPureAutomation extends IPSModule {
 			} else {
 				if($value >= 0) {
 					SetValue($this->GetIDForIdent($button), true);
-					if($this->ReadPropertyInteger($LEDlight)) {
+					if($this->ReadPropertyBoolean($LEDlight)) {
 						$this->SwitchLED($button, self::LED_ON);
 					}
 				} else {
 					SetValue($this->GetIDForIdent($button), false);
-					if($this->ReadPropertyInteger($LEDlight)) {
+					if($this->ReadPropertyBoolean($LEDlight)) {
 						$this->SwitchLED($button, self::LED_OFF);
 					}
 				}
