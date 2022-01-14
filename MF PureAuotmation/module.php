@@ -23,7 +23,6 @@ class MaxFlexPureAutomation extends IPSModule {
 		}
 
 		$this->RegisterPropertyInteger("ID", 1);
-		$this->RegisterVariableInteger("MFTYPE", 46);
 		$this->RegisterPropertyBoolean("LED1", false); // If true turns the LED on after an action
 		$this->RegisterPropertyBoolean("SWITCHBUTTON1", false); // false = Button, true = switch
 		$this->RegisterPropertyBoolean("LED2", false); // If true turns the LED on after an action
@@ -80,35 +79,67 @@ class MaxFlexPureAutomation extends IPSModule {
 			if($command == 42) {
 					switch($value) {
 						case 1: // Button 1
-							$this->changeButtonValue(1, $value);
+							if($value > 0) {
+								$this->changeButtonValue(1, true);
+							} else {
+								$this->changeButtonValue(1, false);
+							}
 						break;
 	
 						case 2: // Button 2
-							$this->changeButtonValue(2, $value);
+							if($value > 0) {
+								$this->changeButtonValue(2, true);
+							} else {
+								$this->changeButtonValue(2, false);
+							}
 						break;
 	
 						case 4: // Button 3
-							$this->changeButtonValue(3, $value);
+							if($value > 0) {
+								$this->changeButtonValue(3, true);
+							} else {
+								$this->changeButtonValue(3, false);
+							}
 						break;
 	
 						case 8: // Button 4
-							$this->changeButtonValue(4, $value);
+							if($value > 0) {
+								$this->changeButtonValue(4, true);
+							} else {
+								$this->changeButtonValue(4, false);
+							}
 						break;
 	
 						case 16: // Button 5
-							$this->changeButtonValue(5, $value);
+							if($value > 0) {
+								$this->changeButtonValue(5, true);
+							} else {
+								$this->changeButtonValue(5, false);
+							}
 						break;
 	
 						case 32: // Button 6
-							$this->changeButtonValue(6, $value);
+							if($value > 0) {
+								$this->changeButtonValue(6, true);
+							} else {
+								$this->changeButtonValue(6, false);
+							}
 						break;
 	
 						case 64: // Button 7
-							$this->changeButtonValue(7, $value);
+							if($value > 0) {
+								$this->changeButtonValue(7, true);
+							} else {
+								$this->changeButtonValue(7, false);
+							}
 						break;
 	
 						case 128: // Button 8
-							$this->changeButtonValue(8, $value);
+							if($value > 0) {
+								$this->changeButtonValue(8, true);
+							} else {
+								$this->changeButtonValue(8, false);
+							}
 						break;
 					}
 			}
@@ -119,31 +150,14 @@ class MaxFlexPureAutomation extends IPSModule {
 		$switch_button = "SWITCHBUTTON" . $buttonNumber;
 		$button = "BUTTON" . $buttonNumber;
 		$LEDlight = "LED" . $buttonNumber;
-			if($this->ReadPropertyBoolean($switch_button)) {
-				if(GetValue($this->GetIDForIdent($button))) {
-					SetValue($this->GetIDForIdent($button), false);
-					if($this->ReadPropertyInteger($LEDlight)) {
-						$this->SwitchLED($buttonNumber, self::LED_OFF);
-					}
-				} else {
-					SetValue($this->GetIDForIdent($button), true);
-					if($this->ReadPropertyInteger($LEDlight)) {
-						$this->SwitchLED($buttonNumber, self::LED_ON);
-					}
-				}
+		SetValue($this->GetIDForIdent($button), $value);
+		if(GetValue($this->ReadPropertyBoolean($LEDlight))) {
+			if(GetValue($this->GetIDForIdent($button))) {
+				$this->SwitchLED($buttonNumber, self::LED_ON);
 			} else {
-				if($value > 0) {
-					SetValue($this->GetIDForIdent($button), true);
-					if($this->ReadPropertyBoolean($LEDlight)) {
-						$this->SwitchLED($buttonNumber, self::LED_ON);
-					}
-				} else {
-					SetValue($this->GetIDForIdent($button), false);
-					if($this->ReadPropertyBoolean($LEDlight)) {
-						$this->SwitchLED($buttonNumber, self::LED_OFF);
-					}
-				}
+				$this->SwitchLED($buttonNumber, self::LED_OFF);
 			}
+		}
 	}
 
 	private function SwitchLED(int $LEDnumber, int $State) {

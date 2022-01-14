@@ -2,7 +2,6 @@
   "elements":
   [
     { "type": "NumberSpinner", "name": "ID", "caption": "ID"},
-    { "type": "NumberSpinner", "name": "MFTYPE", "caption": "MaxFlex Typ"},
     { "type": "CheckBox", "name": "LED1", "caption": "LED 1 einschalten?"},
     { "type": "CheckBox", "name": "SWITCHBUTTON1", "caption": "Taste 1 als Schalter?"},
     { "type": "CheckBox", "name": "LED2", "caption": "LED 2 einschalten?"},
