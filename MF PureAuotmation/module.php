@@ -40,14 +40,14 @@ class MaxFlexPureAutomation extends IPSModule {
 		$this->RegisterPropertyBoolean("LED8", false); // If true turns the LED on after an action
 		$this->RegisterPropertyBoolean("SWITCHBUTTON8", false); // false = Button, true = switch
 		
-		$this->RegisterVariableInteger("BUTTON1", $this->Translate("Button1"), "BRELAG.Switch", 1);
-		$this->RegisterVariableInteger("BUTTON2", $this->Translate("Button2"), "BRELAG.Switch", 2);
-		$this->RegisterVariableInteger("BUTTON3", $this->Translate("Button3"), "BRELAG.Switch", 3);
-		$this->RegisterVariableInteger("BUTTON4", $this->Translate("Button4"), "BRELAG.Switch", 4);
-		$this->RegisterVariableInteger("BUTTON5", $this->Translate("Button5"), "BRELAG.Switch", 5);
-		$this->RegisterVariableInteger("BUTTON6", $this->Translate("Button6"), "BRELAG.Switch", 6);
-		$this->RegisterVariableInteger("BUTTON7", $this->Translate("Button7"), "BRELAG.Switch", 7);
-		$this->RegisterVariableInteger("BUTTON8", $this->Translate("Button8"), "BRELAG.Switch", 8);
+		$this->RegisterVariableInteger("BUTTON1", $this->Translate("Button1"), "", 1);
+		$this->RegisterVariableInteger("BUTTON2", $this->Translate("Button2"), "", 2);
+		$this->RegisterVariableInteger("BUTTON3", $this->Translate("Button3"), "", 3);
+		$this->RegisterVariableInteger("BUTTON4", $this->Translate("Button4"), "", 4);
+		$this->RegisterVariableInteger("BUTTON5", $this->Translate("Button5"), "", 5);
+		$this->RegisterVariableInteger("BUTTON6", $this->Translate("Button6"), "", 6);
+		$this->RegisterVariableInteger("BUTTON7", $this->Translate("Button7"), "", 7);
+		$this->RegisterVariableInteger("BUTTON8", $this->Translate("Button8"), "", 8);
 
 	}
 
