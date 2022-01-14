@@ -1,0 +1,16 @@
+{
+  "translations": {
+    "de": {
+      "Button-1": "Taste 1",
+      "Button-2": "Taste 2",
+      "Button-3": "Taste 3",
+      "Button-4": "Taste 4",
+      "Button-5": "Taste 5",
+      "Button-6": "Taste 6",
+      "Button-7": "Taste 7",
+      "Button-8": "Taste 8",
+      "On": "An",
+      "Off": "Aus"
+    }
+  }
+}

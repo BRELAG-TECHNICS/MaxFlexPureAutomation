@@ -1,0 +1,14 @@
+{
+	"id": "{0C22F03E-F4CB-DB8B-1925-FF4FEA7BC2CE}",
+	"name": "MaxFlexPureAutomation",
+	"type": 3,
+	"vendor": "Brelag Schweiz AG",
+	"aliases": 
+	[
+		"Knockaut MaxFlex Pure Automation"
+	],
+	"parentRequirements": ["{C24CDA30-82EE-46E2-BAA0-13A088ACB5DB}"],
+	"childRequirements": [],
+	"implemented": ["{BA70E3E8-68D2-4E3B-8C64-BBB86F188473}"],
+	"prefix": "BRELAG"
+}
