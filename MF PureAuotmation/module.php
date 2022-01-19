@@ -53,7 +53,7 @@ class MaxFlexPureAutomation extends IPSModule {
 	public function ApplyChanges() {
 		//Never delete this line!
 		parent::ApplyChanges();
-		$buttons = [2,3,4,5,6,7,8,];
+		$buttons = [1, 2,3,4,5,6,7,8,];
 		if($this->ReadPropertyBoolean("PUSHBUTTON")) {
 			foreach($buttons as $button) {
 				$this->UnregisterVariable("BUTTON" . $button);
