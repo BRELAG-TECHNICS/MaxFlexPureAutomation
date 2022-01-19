@@ -2,6 +2,7 @@
   "elements":
   [
     { "type": "NumberSpinner", "name": "ID", "caption": "ID"},
+    { "type": "CheckBox", "name": "PUSHBUTTON", "caption": "MaxFlex als Taster nutzen?"},
     { "type": "CheckBox", "name": "LED1", "caption": "LED 1 einschalten?"},
     { "type": "CheckBox", "name": "LED2", "caption": "LED 2 einschalten?"},
     { "type": "CheckBox", "name": "LED3", "caption": "LED 3 einschalten?"},
