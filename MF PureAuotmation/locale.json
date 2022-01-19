@@ -1,14 +1,15 @@
 {
   "translations": {
     "de": {
-      "Button1": "Taste 1",
-      "Button2": "Taste 2",
-      "Button3": "Taste 3",
-      "Button4": "Taste 4",
-      "Button5": "Taste 5",
-      "Button6": "Taste 6",
-      "Button7": "Taste 7",
-      "Button8": "Taste 8",
+      "Button1": "Schalter 1",
+      "Button2": "Schalter 2",
+      "Button3": "Schalter 3",
+      "Button4": "Schalter 4",
+      "Button5": "Schalter 5",
+      "Button6": "Schalter 6",
+      "Button7": "Schalter 7",
+      "Button8": "Schalter 8",
+      "Pushbutton": "Taster",
       "On": "An",
       "Off": "Aus"
     }

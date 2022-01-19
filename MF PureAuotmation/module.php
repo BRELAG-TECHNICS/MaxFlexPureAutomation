@@ -57,10 +57,11 @@ class MaxFlexPureAutomation extends IPSModule {
 		if($this->ReadPropertyBoolean("PUSHBUTTON")) {
 			foreach($buttons as $button) {
 				$this->UnregisterVariable("BUTTON" . $button);
+				$this->RegisterVariableInteger("PUSHBUTTON", "Pushbutton", "", 0);
 			}
 		} else {
 			foreach($buttons as $button) {
-				$this->RegisterVariableBoolean("BUTTON" . $button, $this->Translate("BUTTON" . $button), "BRELAG.Switch", $button);
+				$this->RegisterVariableBoolean("BUTTON" . $button, $this->Translate("Button" . $button), "BRELAG.Switch", $button);
 			}
 		}
 
@@ -83,7 +84,7 @@ class MaxFlexPureAutomation extends IPSModule {
 					switch($value) {
 						case 0:
 							if($this->ReadPropertyBoolean("PUSHBUTTON")) {
-								SetValue($this->GetIDForIdent("BUTTON1"), false);
+								SetValue($this->GetIDForIdent("PUSHBUTTON"), 0);
 							}
 						break;
 
@@ -142,7 +143,21 @@ class MaxFlexPureAutomation extends IPSModule {
 				}  
 			} 
 		} else {
-			SetValue($this->GetIDForIdent("BUTTON1"), true);
+			switch($buttonNumber) {
+				case 1:
+				case 3:
+				case 5:
+				case 7:
+					SetValue($this->GetIDForIdent("PUSHBUTTON"), 1);
+				break;
+
+				case 2:
+				case 4:
+				case 6:
+				case 8:
+					SetValue($this->GetIDForIdent("PUSHBUTTON"), 2);
+				break;
+			}
 		}
 	}
 
