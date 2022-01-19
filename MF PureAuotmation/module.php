@@ -60,7 +60,7 @@ class MaxFlexPureAutomation extends IPSModule {
 			}
 		} else {
 			foreach($buttons as $button) {
-				$this->RegisterVariableBoolean("BUTTON" . $button);
+				$this->RegisterVariableBoolean("BUTTON" . $button, $this->Translate("BUTTON" . $button), "BRELAG.Switch", $button);
 			}
 		}
 
