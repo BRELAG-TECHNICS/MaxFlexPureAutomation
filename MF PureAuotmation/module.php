@@ -1,355 +1,192 @@
-<?
-include_once __DIR__ . '/../libs/DominoSwissBase.php';
+<?php
 
-class DominoSwissMXFEShutter extends DominoSwissBase {
-	
+class MaxFlexPureAutomation extends IPSModule {
+
+	const LED_OFF = 0;
+	const LED_ON = 1;
+	const LED_BLINK = 2;
+
 	public function Create(){
 		//Never delete this line!
 		parent::Create();
 		
 		//These lines are parsed on Symcon Startup or Instance creation
 		//You cannot use variables here. Just static values.
-		$this->RegisterPropertyBoolean("Awning", false);
-		$this->RegisterPropertyInteger("CountRockerSteps", 8);
-		$this->RegisterPropertyInteger("Runtime", 90);
-
-		if (!IPS_VariableProfileExists("BRELAG.Shutter")) {
-			IPS_CreateVariableProfile("BRELAG.Shutter", 0);
-			IPS_SetVariableProfileIcon("BRELAG.Shutter", "IPS");
-			IPS_SetVariableProfileAssociation("BRELAG.Shutter", 0, $this->Translate("Stopped"), "", 0x00D500);
-			IPS_SetVariableProfileAssociation("BRELAG.Shutter", 1, $this->Translate("Moving"), "", 0xFF0000);
-		}
-		
-		if (!IPS_VariableProfileExists("BRELAG.ShutterMoveJalousie")) {
-			IPS_CreateVariableProfile("BRELAG.ShutterMoveJalousie", 1);
-			IPS_SetVariableProfileValues("BRELAG.ShutterMoveJalousie", 0, 4, 0);
-			IPS_SetVariableProfileIcon("BRELAG.ShutterMoveJalousie", "IPS");
-			IPS_SetVariableProfileAssociation("BRELAG.ShutterMoveJalousie", 0, $this->Translate("UP"), "", -1);
-			IPS_SetVariableProfileAssociation("BRELAG.ShutterMoveJalousie", 1, "<<", "", -1);
-			IPS_SetVariableProfileAssociation("BRELAG.ShutterMoveJalousie", 2, "STOP", "", -1);
-			IPS_SetVariableProfileAssociation("BRELAG.ShutterMoveJalousie", 3, ">>", "", -1);
-			IPS_SetVariableProfileAssociation("BRELAG.ShutterMoveJalousie", 4, $this->Translate("DOWN"), "", -1);
-		}
-
-		if (!IPS_VariableProfileExists("BRELAG.ShutterMoveAwning")) {
-			IPS_CreateVariableProfile("BRELAG.ShutterMoveAwning", 1);
-			IPS_SetVariableProfileValues("BRELAG.ShutterMoveAwning", 0, 4, 0);
-			IPS_SetVariableProfileIcon("BRELAG.ShutterMoveAwning", "IPS");
-			IPS_SetVariableProfileAssociation("BRELAG.ShutterMoveAwning", 0, $this->Translate("UP"), "", -1);
-			IPS_SetVariableProfileAssociation("BRELAG.ShutterMoveAwning", 2, "STOP", "", -1);
-			IPS_SetVariableProfileAssociation("BRELAG.ShutterMoveAwning", 4, $this->Translate("DOWN"), "", -1);
-		}
-
-		if (!IPS_VariableProfileExists("BRELAG.Rocker8")) {
-			IPS_CreateVariableProfile("BRELAG.Rocker8", 1);
-			IPS_SetVariableProfileValues("BRELAG.Rocker8", 0, 8, 1);
-			IPS_SetVariableProfileIcon("BRELAG.Rocker8", "IPS");
-			IPS_SetVariableProfileAssociation("BRELAG.Rocker8", 0, $this->Translate($this->Translate("Closed")), "", -1);
-			IPS_SetVariableProfileAssociation("BRELAG.Rocker8", 1, $this->Translate($this->Translate("1x Upper")), "", -1);
-			IPS_SetVariableProfileAssociation("BRELAG.Rocker8", 2, $this->Translate($this->Translate("2x Upper")), "", -1);
-			IPS_SetVariableProfileAssociation("BRELAG.Rocker8", 3, $this->Translate($this->Translate("3x Upper")), "", -1);
-			IPS_SetVariableProfileAssociation("BRELAG.Rocker8", 4, $this->Translate($this->Translate("4x Upper")), "", -1);
-			IPS_SetVariableProfileAssociation("BRELAG.Rocker8", 5, $this->Translate($this->Translate("5x Upper")), "", -1);
-			IPS_SetVariableProfileAssociation("BRELAG.Rocker8", 6, $this->Translate($this->Translate("6x Upper")), "", -1);
-			IPS_SetVariableProfileAssociation("BRELAG.Rocker8", 7, $this->Translate($this->Translate("7x Upper")), "", -1);
-			IPS_SetVariableProfileAssociation("BRELAG.Rocker8", 8, $this->Translate($this->Translate("8x Upper")), "", -1);
-		}
-
-		if (!IPS_VariableProfileExists("BRELAG.Rocker7")) {
-			IPS_CreateVariableProfile("BRELAG.Rocker7", 1);
-			IPS_SetVariableProfileValues("BRELAG.Rocker7", 0, 7, 1);
-			IPS_SetVariableProfileIcon("BRELAG.Rocker7", "IPS");
-			IPS_SetVariableProfileAssociation("BRELAG.Rocker7", 0, $this->Translate($this->Translate("Closed")), "", -1);
-			IPS_SetVariableProfileAssociation("BRELAG.Rocker7", 1, $this->Translate($this->Translate("1x Upper")), "", -1);
-			IPS_SetVariableProfileAssociation("BRELAG.Rocker7", 2, $this->Translate($this->Translate("2x Upper")), "", -1);
-			IPS_SetVariableProfileAssociation("BRELAG.Rocker7", 3, $this->Translate($this->Translate("3x Upper")), "", -1);
-			IPS_SetVariableProfileAssociation("BRELAG.Rocker7", 4, $this->Translate($this->Translate("4x Upper")), "", -1);
-			IPS_SetVariableProfileAssociation("BRELAG.Rocker7", 5, $this->Translate($this->Translate("5x Upper")), "", -1);
-			IPS_SetVariableProfileAssociation("BRELAG.Rocker7", 6, $this->Translate($this->Translate("6x Upper")), "", -1);
-			IPS_SetVariableProfileAssociation("BRELAG.Rocker7", 7, $this->Translate($this->Translate("7x Upper")), "", -1);
-		}
-
-		if (!IPS_VariableProfileExists("BRELAG.Rocker6")) {
-			IPS_CreateVariableProfile("BRELAG.Rocker6", 1);
-			IPS_SetVariableProfileValues("BRELAG.Rocker6", 0, 6, 1);
-			IPS_SetVariableProfileIcon("BRELAG.Rocker6", "IPS");
-			IPS_SetVariableProfileAssociation("BRELAG.Rocker6", 0, $this->Translate($this->Translate("Closed")), "", -1);
-			IPS_SetVariableProfileAssociation("BRELAG.Rocker6", 1, $this->Translate($this->Translate("1x Upper")), "", -1);
-			IPS_SetVariableProfileAssociation("BRELAG.Rocker6", 2, $this->Translate($this->Translate("2x Upper")), "", -1);
-			IPS_SetVariableProfileAssociation("BRELAG.Rocker6", 3, $this->Translate($this->Translate("3x Upper")), "", -1);
-			IPS_SetVariableProfileAssociation("BRELAG.Rocker6", 4, $this->Translate($this->Translate("4x Upper")), "", -1);
-			IPS_SetVariableProfileAssociation("BRELAG.Rocker6", 5, $this->Translate($this->Translate("5x Upper")), "", -1);
-			IPS_SetVariableProfileAssociation("BRELAG.Rocker6", 6, $this->Translate($this->Translate("6x Upper")), "", -1);
-		}
-
-		if (!IPS_VariableProfileExists("BRELAG.Rocker5")) {
-			IPS_CreateVariableProfile("BRELAG.Rocker5", 1);
-			IPS_SetVariableProfileValues("BRELAG.Rocker5", 0, 5, 1);
-			IPS_SetVariableProfileIcon("BRELAG.Rocker5", "IPS");
-			IPS_SetVariableProfileAssociation("BRELAG.Rocker5", 0, $this->Translate($this->Translate("Closed")), "", -1);
-			IPS_SetVariableProfileAssociation("BRELAG.Rocker5", 1, $this->Translate($this->Translate("1x Upper")), "", -1);
-			IPS_SetVariableProfileAssociation("BRELAG.Rocker5", 2, $this->Translate($this->Translate("2x Upper")), "", -1);
-			IPS_SetVariableProfileAssociation("BRELAG.Rocker5", 3, $this->Translate($this->Translate("3x Upper")), "", -1);
-			IPS_SetVariableProfileAssociation("BRELAG.Rocker5", 4, $this->Translate($this->Translate("4x Upper")), "", -1);
-			IPS_SetVariableProfileAssociation("BRELAG.Rocker5", 5, $this->Translate($this->Translate("5x Upper")), "", -1);
-		}
-
-		if (!IPS_VariableProfileExists("BRELAG.Rocker4")) {
-			IPS_CreateVariableProfile("BRELAG.Rocker4", 1);
-			IPS_SetVariableProfileValues("BRELAG.Rocker4", 0, 4, 1);
-			IPS_SetVariableProfileIcon("BRELAG.Rocker4", "IPS");
-			IPS_SetVariableProfileAssociation("BRELAG.Rocker4", 0, $this->Translate($this->Translate("Closed")), "", -1);
-			IPS_SetVariableProfileAssociation("BRELAG.Rocker4", 1, $this->Translate($this->Translate("1x Upper")), "", -1);
-			IPS_SetVariableProfileAssociation("BRELAG.Rocker4", 2, $this->Translate($this->Translate("2x Upper")), "", -1);
-			IPS_SetVariableProfileAssociation("BRELAG.Rocker4", 3, $this->Translate($this->Translate("3x Upper")), "", -1);
-			IPS_SetVariableProfileAssociation("BRELAG.Rocker4", 4, $this->Translate($this->Translate("4x Upper")), "", -1);
-		}
-
-		if (!IPS_VariableProfileExists("BRELAG.Rocker3")) {
-			IPS_CreateVariableProfile("BRELAG.Rocker3", 1);
-			IPS_SetVariableProfileValues("BRELAG.Rocker3", 0, 3, 1);
-			IPS_SetVariableProfileIcon("BRELAG.Rocker3", "IPS");
-			IPS_SetVariableProfileAssociation("BRELAG.Rocker3", 0, $this->Translate($this->Translate("Closed")), "", -1);
-			IPS_SetVariableProfileAssociation("BRELAG.Rocker3", 1, $this->Translate($this->Translate("1x Upper")), "", -1);
-			IPS_SetVariableProfileAssociation("BRELAG.Rocker3", 2, $this->Translate($this->Translate("2x Upper")), "", -1);
-			IPS_SetVariableProfileAssociation("BRELAG.Rocker3", 3, $this->Translate($this->Translate("3x Upper")), "", -1);
-		}
-
-		if (!IPS_VariableProfileExists("BRELAG.Rocker2")) {
-			IPS_CreateVariableProfile("BRELAG.Rocker2", 1);
-			IPS_SetVariableProfileValues("BRELAG.Rocker2", 0, 2, 1);
-			IPS_SetVariableProfileIcon("BRELAG.Rocker2", "IPS");
-			IPS_SetVariableProfileAssociation("BRELAG.Rocker2", 0, $this->Translate($this->Translate("Closed")), "", -1);
-			IPS_SetVariableProfileAssociation("BRELAG.Rocker2", 1, $this->Translate($this->Translate("1x Upper")), "", -1);
-			IPS_SetVariableProfileAssociation("BRELAG.Rocker2", 2, $this->Translate($this->Translate("2x Upper")), "", -1);
-		}
-
-		if (!IPS_VariableProfileExists("BRELAG.Rocker1")) {
-			IPS_CreateVariableProfile("BRELAG.Rocker1", 1);
-			IPS_SetVariableProfileValues("BRELAG.Rocker1", 0, 1, 1);
-			IPS_SetVariableProfileIcon("BRELAG.Rocker1", "IPS");
-			IPS_SetVariableProfileAssociation("BRELAG.Rocker1", 0, $this->Translate($this->Translate("Closed")), "", -1);
-			IPS_SetVariableProfileAssociation("BRELAG.Rocker1", 1, $this->Translate($this->Translate("1x Upper")), "", -1);
-		}
-
-		$this->RegisterVariableBoolean("Status", "Status", "BRELAG.Shutter", 1);
-		
-		$this->MaintainVariable("SavedRocker", $this->Translate("SavedRocker"), 1, "", 10, true);
-		IPS_SetHidden($this->GetIDForIdent("SavedRocker"), true);
-
-		$this->RegisterTimer("SetMovementStopTimer", 0, 'BRELAG_SetMovementStop($_IPS[\'TARGET\']);');
 
 		$this->ConnectParent("{1252F612-CF3F-4995-A152-DA7BE31D4154}"); //DominoSwiss eGate
+
+		if(!IPS_VariableProfileExists("BRELAG.Switch")) {
+			IPS_CreateVariableProfile("BRELAG.Switch", 0);
+			IPS_SetVariableProfileIcon("BRELAG.Switch", "Power");
+			IPS_SetVariableProfileAssociation("BRELAG.Switch", 0, $this->Translate("Off"), "", -1);
+			IPS_SetVariableProfileAssociation("BRELAG.Switch", 1, $this->Translate("On"), "", -1);
+		}
+
+		if (!IPS_VariableProfileExists("BRELAG.Pushbutton")) {
+			IPS_CreateVariableProfile("BRELAG.Pushbutton", 1);
+			IPS_SetVariableProfileValues("BRELAG.Pushbutton", 0, 4, 0);
+			IPS_SetVariableProfileIcon("BRELAG.Pushbutton", "IPS");
+			IPS_SetVariableProfileAssociation("BRELAG.Pushbutton", 0, $this->Translate("Off"), "", -1);
+			IPS_SetVariableProfileAssociation("BRELAG.Pushbutton", 1, $this->Translate("ButtonLeft"), "", -1);
+			IPS_SetVariableProfileAssociation("BRELAG.Pushbutton", 2, $this->Translate("ButtonRight"), "", -1);
+		}
+
+		$this->RegisterPropertyInteger("ID", 1);
+		$this->RegisterPropertyBoolean("PUSHBUTTON", false); 
+		$this->RegisterPropertyBoolean("LED1", false); // If true turns the LED on after an action
+		$this->RegisterPropertyBoolean("LED2", false); // If true turns the LED on after an action
+		$this->RegisterPropertyBoolean("LED3", false); // If true turns the LED on after an action
+		$this->RegisterPropertyBoolean("LED4", false); // If true turns the LED on after an action
+		$this->RegisterPropertyBoolean("LED5", false); // If true turns the LED on after an action
+		$this->RegisterPropertyBoolean("LED6", false); // If true turns the LED on after an action
+		$this->RegisterPropertyBoolean("LED7", false); // If true turns the LED on after an action
+		$this->RegisterPropertyBoolean("LED8", false); // If true turns the LED on after an action
+		
+		$this->RegisterVariableBoolean("BUTTON1", $this->Translate("Button1"), "BRELAG.Switch", 1);
+		$this->RegisterVariableBoolean("BUTTON2", $this->Translate("Button2"), "BRELAG.Switch", 2);
+		$this->RegisterVariableBoolean("BUTTON3", $this->Translate("Button3"), "BRELAG.Switch", 3);
+		$this->RegisterVariableBoolean("BUTTON4", $this->Translate("Button4"), "BRELAG.Switch", 4);
+		$this->RegisterVariableBoolean("BUTTON5", $this->Translate("Button5"), "BRELAG.Switch", 5);
+		$this->RegisterVariableBoolean("BUTTON6", $this->Translate("Button6"), "BRELAG.Switch", 6);
+		$this->RegisterVariableBoolean("BUTTON7", $this->Translate("Button7"), "BRELAG.Switch", 7);
+		$this->RegisterVariableBoolean("BUTTON8", $this->Translate("Button8"), "BRELAG.Switch", 8);
+
 	}
 
-	
-	
 	public function Destroy() {
 		//Never delete this line!
 		parent::Destroy();
 		
 	}
-
-	
 	
 	public function ApplyChanges() {
 		//Never delete this line!
 		parent::ApplyChanges();
+		$buttons = [1, 2,3,4,5,6,7,8,];
+		if($this->ReadPropertyBoolean("PUSHBUTTON")) {
+			foreach($buttons as $button) {
+				$this->UnregisterVariable("BUTTON" . $button);
+				$this->RegisterVariableInteger("PUSHBUTTON", "Pushbutton", "", 0);
+			}
+		} else {
+			foreach($buttons as $button) {
+				$this->RegisterVariableBoolean("BUTTON" . $button, $this->Translate("Button" . $button), "BRELAG.Switch", $button);
+			}
+		}
 
-		if ($this->ReadPropertyBoolean("Awning")) {
-			$this->MaintainVariable("Movement", $this->Translate("Movement"), 1, "BRELAG.ShutterMoveAwning", 3, true);
-			$this->EnableAction("Movement");
-			$this->MaintainVariable("RockerControl", $this->Translate("RockerControl"), 1, "BRELAG.Rocker".$this->ReadPropertyInteger("CountRockerSteps"), 4, false);
-		}
-		else {
-			$this->MaintainVariable("Movement", $this->Translate("Movement"), 1,  "BRELAG.ShutterMoveJalousie", 3, true);
-			$this->EnableAction("Movement");
-			$this->MaintainVariable("RockerControl", $this->Translate("RockerControl"), 1, "BRELAG.Rocker".$this->ReadPropertyInteger("CountRockerSteps"), 4, true);
-			$this->EnableAction("RockerControl");
-		}
 	}
 
-	
-	
+
 	public function ReceiveData($JSONString) {
 
 		$data = json_decode($JSONString);
 		
 		$this->SendDebug("BufferIn", print_r($data->Values, true), 0);
+		$id = $data->Values->ID;
+		$command = $data->Values->Command;
 
-		//No ID check necessary, check is done by receiveFilter "DominoSwissBase.php->ApplyChanges()"
-		if ($data->Values->Priority >= $this->GetHighestLockLevel()) {
-			$command = $data->Values->Command;
-			switch ($command) {
-				case 1:
-				case 2:
-					if (GetValue($this->GetIDForIdent("Status"))){
-						SetValue($this->GetIDForIdent("Status"), false);
-						SetValue($this->GetIDForIdent("Movement"), 2);
-					}
-					else {
-						
-						if ($this->ReadPropertyBoolean("Awning")) {
-							SetValue($this->GetIDForIdent("Status"), true);
-							if ($command == 1) {
-								SetValue($this->GetIDForIdent("Movement"), 0);
+		if($id == $this->ReadPropertyInteger("ID")) {
+
+			$value = $data->Values->Value;
+
+			if($command == 42) {
+					switch($value) {
+						case 0:
+							if($this->ReadPropertyBoolean("PUSHBUTTON")) {
+								SetValue($this->GetIDForIdent("PUSHBUTTON"), 0);
 							}
-							else {
-								SetValue($this->GetIDForIdent("Movement"), 4);
-							}
-							$this->SetTimerInterval("SetMovementStopTimer", $this->ReadPropertyInteger("Runtime") * 1000);
-						}
-						else {
-							SetValue($this->GetIDForIdent("Status"), false);
-							if ($command == 1) {
-								if ((GetValue($this->GetIDForIdent("RockerControl")) + 1) > $this->ReadPropertyInteger("CountRockerSteps")) {
-									SetValue($this->GetIDForIdent("RockerControl"), $this->ReadPropertyInteger("CountRockerSteps"));
-								}
-								else {
-									SetValue($this->GetIDForIdent("RockerControl"), GetValue($this->GetIDForIdent("RockerControl")) + 1);
-								}
-								SetValue($this->GetIDForIdent("Movement"), 1);
-							}
-							else {
-								if ((GetValue($this->GetIDForIdent("RockerControl")) - 1) < 0 ) {
-									SetValue($this->GetIDForIdent("RockerControl"), 0);
-								}
-								else {
-									SetValue($this->GetIDForIdent("RockerControl"), GetValue($this->GetIDForIdent("RockerControl")) - 1);
-								}
-								SetValue($this->GetIDForIdent("Movement"), 3);
-							}
-						}
-					}
-					break;
+						break;
 
-				case 3:
-				case 4:
-					SetValue($this->GetIDForIdent("Status"), true);
-					$this->SetTimerInterval("SetMovementStopTimer", $this->ReadPropertyInteger("Runtime") * 1000);
-					if ($command == 3) {
-						SetValue($this->GetIDForIdent("RockerControl"), $this->ReadPropertyInteger("CountRockerSteps"));
-						SetValue($this->GetIDForIdent("Movement"), 0);
+						case 1: // Button 1
+								$this->changeButtonValue(1);	
+						break;
+	
+						case 2: // Button 2
+								$this->changeButtonValue(2);
+						break;
+	
+						case 4: // Button 3
+								$this->changeButtonValue(3);
+						break;
+	
+						case 8: // Button 4
+								$this->changeButtonValue(4);
+						break;
+	
+						case 16: // Button 5
+								$this->changeButtonValue(5);
+						break;
+	
+						case 32: // Button 6
+								$this->changeButtonValue(6);
+						break;
+	
+						case 64: // Button 7
+								$this->changeButtonValue(7);
+						break;
+	
+						case 128: // Button 8
+								$this->changeButtonValue(8);
+						break;
 					}
-					else {
-						SetValue($this->GetIDForIdent("RockerControl"), 0);
-						SetValue($this->GetIDForIdent("Movement"), 4);
-					}
-					break;
-
-				case 5:
-					SetValue($this->GetIDForIdent("Status"), false);
-					SetValue($this->GetIDForIdent("Movement"), 2);
-					break;
-
-				case 15:
-					//only save if its our ID
-					if ($data->Values->ID == $this->ReadPropertyInteger("ID")) {
-						SetValue($this->GetIDForIdent("SavedRocker"), GetValue($this->GetIDForIdent("RockerControl")));
-						SetValue($this->GetIDForIdent("Saving"), 1);
-					}
-					break;
-					
-				case 16:
-					if (GetValue($this->GetIDForIdent("Status"))) {
-						SetValue($this->GetIDForIdent("Status"), false);
-						SetValue($this->GetIDForIdent("Movement"), 2);
-					}
-					else {
-						SetValue($this->GetIDForIdent("Status"), true);
-						SetValue($this->GetIDForIdent("Movement"), 2);
-						$this->SetTimerInterval("SetMovementStopTimer", $this->ReadPropertyInteger("Runtime") * 1000);
-					}
-					$savedRocker = ($this->GetIDForIdent("SavedRocker"));
-					SetValue($this->GetIDForIdent("RockerControl"), $savedRocker);
-					break;
-
-				case 20:
-					SetValue($this->GetIDForIdent("LockLevel". $data->Values->Value .""), true);
-					break;
-
-				case 21:
-					SetValue($this->GetIDForIdent("LockLevel". $data->Values->Value .""), false);
-					break;
-				
-				case 23:
-					SetValue($this->GetIDForIdent("Status"), true);
-					SetValue($this->GetIDForIdent("Movement"), 2);
-					SetValue($this->GetIDForIdent("Saving"), 0);
-					$this->SetTimerInterval("SetMovementStopTimer", $this->ReadPropertyInteger("Runtime") * 1000);
-					$savedRocker = GetValue($this->GetIDForIdent("SavedRocker"));
-					SetValue($this->GetIDForIdent("RockerControl"), $savedRocker);
-					break;
 			}
 		}
 	}
 
-	
-	
-	public function RequestAction($Ident, $Value) {
+	public function changeButtonValue($buttonNumber) {
+		$switch_button = "SWITCHBUTTON" . $buttonNumber;
+		$button = "BUTTON" . $buttonNumber;
+		$LEDlight = "LED" . $buttonNumber;
+		$ATTLED = "ATTLED" . $buttonNumber;
 
-		switch ($Ident) {
-			case 'Movement':
-				switch ($Value) {
-					case 0:
-						$this->ContinuousUp(GetValue($this->GetIDForIdent("SendingOnLockLevel")));
-						break;
-
-					case 1:
-						$this->PulseUp(GetValue($this->GetIDForIdent("SendingOnLockLevel")));
-						break;
-
-					case 2:
-						$this->Stop(GetValue($this->GetIDForIdent("SendingOnLockLevel")));
-						break;
-
-					case 3:
-						$this->PulseDown(GetValue($this->GetIDForIdent("SendingOnLockLevel")));
-						break;
-
-					case 4:
-						$this->ContinuousDown(GetValue($this->GetIDForIdent("SendingOnLockLevel")));
-						break;
-
+		if(!$this->ReadPropertyBoolean("PUSHBUTTON")) { 
+			if(GetValue($this->GetIDForIdent($button))) {
+				SetValue($this->GetIDForIdent($button), false);
+				if($this->ReadPropertyBoolean($LEDlight)) {
+					$this->SwitchLED($buttonNumber, self::LED_OFF);
 				}
-			break;
-
-			case 'RockerControl':
-				$this->SetRocker($Value);
+			} else {
+				SetValue($this->GetIDForIdent($button), true);
+				if($this->ReadPropertyBoolean($LEDlight) && !$this->ReadPropertyBoolean("PUSHBUTTON")) {
+					$this->SwitchLED($buttonNumber, self::LED_ON);
+				}  
+			} 
+		} else {
+			switch($buttonNumber) {
+				case 1:
+				case 3:
+				case 5:
+				case 7:
+					SetValue($this->GetIDForIdent("PUSHBUTTON"), 1);
 				break;
 
-
-			default:
-				parent::RequestAction($Ident, $Value);
-		}
-	}
-
-	
-	
-	public function SetMovementStop() {
-		SetValue($this->GetIDForIdent("Status"), false);
-		$this->SetTimerInterval("SetMovementStopTimer", 0);
-	}
-
-	
-	
-	public function SetRocker($Value) {
-
-		$oldValue = GetValue($this->GetIDForIdent("RockerControl"));
-
-		if ($Value > $oldValue) {
-			for($i = 0; $i < ($Value - $oldValue); $i++) {
-				$this->PulseUp(GetValue($this->GetIDForIdent("SendingOnLockLevel")));
+				case 2:
+				case 4:
+				case 6:
+				case 8:
+					SetValue($this->GetIDForIdent("PUSHBUTTON"), 2);
+				break;
 			}
 		}
-		else {
-			for($i = 0; $i < abs($oldValue - $Value); $i++) {
-				$this->PulseDown(GetValue($this->GetIDForIdent("SendingOnLockLevel")));
-			}
-		}
-
-		SetValue($this->GetIDForIdent("RockerControl"), $Value);
 	}
 
+	private function SwitchLED(int $LEDnumber, int $State) {
+		$this->SetLED($LEDnumber -1 + $State * 8);
+	}
+
+	private function SetLED(int $Value){
+		$this->SendCommand(1, 43, $Value, 3);
+	}
+
+	public function SendCommand(int $Instruction, int $Command, int $Value, int $Priority) {
+		// CheckNr 2942145
+		$id = $this->ReadPropertyInteger("ID");
+		return $this->SendDataToParent(json_encode(Array("DataID" => "{C24CDA30-82EE-46E2-BAA0-13A088ACB5DB}", "Instruction" => $Instruction, "ID" => $id, "Command" => $Command, "Value" => $Value, "Priority" => $Priority)));
+	}
+
+	private function RegisterSecurityMode(int $ID) {
+		$this->RegisterMessage($ID, 10603 /* VM_UPDATE */);
+	}
 }
+
 ?>
