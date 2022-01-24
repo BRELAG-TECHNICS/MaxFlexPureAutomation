@@ -135,7 +135,7 @@ class MaxFlexPureAutomation extends IPSModule {
 		}
 	}
 
-	public function changeButtonValue($buttonNumber) {
+	public function changeButtonValue(Int $buttonNumber) {
 		$switch_button = "SWITCHBUTTON" . $buttonNumber;
 		$button = "BUTTON" . $buttonNumber;
 		$LEDlight = "LED" . $buttonNumber;
@@ -172,7 +172,7 @@ class MaxFlexPureAutomation extends IPSModule {
 		}
 	}
 
-	private function SwitchLED(int $LEDnumber, int $State) {
+	public function SwitchLED(int $LEDnumber, int $State) {
 		$this->SetLED($LEDnumber -1 + $State * 8);
 	}
 
