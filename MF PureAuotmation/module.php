@@ -66,7 +66,7 @@ class MaxFlexPureAutomation extends IPSModule {
 		if($this->ReadPropertyBoolean("PUSHBUTTON")) {
 			foreach($buttons as $button) {
 				$this->UnregisterVariable("BUTTON" . $button);
-				$this->RegisterVariableInteger("PUSHBUTTON", "Pushbutton", "BRELAG.Pushbutton", 0);
+				$this->RegisterVariableInteger("PUSHBUTTON", "Pushbutton", "", 0);
 				$this->SwitchLED($button, self::LED_OFF);
 			}
 		} else {
