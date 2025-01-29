@@ -63,10 +63,19 @@ class MaxFlexPureAutomation extends IPSModule {
 		//Never delete this line!
 		parent::ApplyChanges();
 		$buttons = [1, 2, 3, 4, 5, 6, 7, 8,];
-		foreach($buttons as $button) {
-			$this->RegisterVariableBoolean("BUTTON" . $button, $this->Translate("Button" . $button), "BRELAG.Switch", $button);
-			$this->UnregisterVariable("PUSHBUTTON");
+		if($this->ReadPropertyBoolean("PUSHBUTTON")) {
+			foreach($buttons as $button) {
+				$this->UnregisterVariable("BUTTON" . $button);
+				$this->RegisterVariableInteger("PUSHBUTTON", "Pushbutton", "BRELAG.Pushbutton", 0);
+				$this->SwitchLED($button, self::LED_OFF);
+			}
+		} else {
+			foreach($buttons as $button) {
+				$this->RegisterVariableBoolean("BUTTON" . $button, $this->Translate("Button" . $button), "BRELAG.Switch", $button);
+				$this->UnregisterVariable("PUSHBUTTON");
+			}
 		}
+
 	}
 
 
@@ -157,7 +166,6 @@ class MaxFlexPureAutomation extends IPSModule {
 					break;
 				case 7:
 					SetValue($this->GetIDForIdent("PUSHBUTTON"), 7);
-					break;
 				break;
 
 				case 2:
