@@ -162,25 +162,24 @@ class MaxFlexPureAutomation extends IPSModule {
 				case 1:
 					SetValue($this->GetIDForIdent("PUSHBUTTON"), 1);
 					break;
-				case 3:
-					SetValue($this->GetIDForIdent("PUSHBUTTON"), 3);
-					break;
-				case 5:
-					SetValue($this->GetIDForIdent("PUSHBUTTON"), 5);
-					break;
-				case 7:
-					SetValue($this->GetIDForIdent("PUSHBUTTON"), 7);
-				break;
-
 				case 2:
 					SetValue($this->GetIDForIdent("PUSHBUTTON"), 2);
+					break;
+				case 3:
+					SetValue($this->GetIDForIdent("PUSHBUTTON"), 3);
 					break;
 				case 4:
 					SetValue($this->GetIDForIdent("PUSHBUTTON"), 4);
 					break;
+				case 5:
+					SetValue($this->GetIDForIdent("PUSHBUTTON"), 5);
+					break;
 				case 6:
 					SetValue($this->GetIDForIdent("PUSHBUTTON"), 6);
 					break;
+				case 7:
+					SetValue($this->GetIDForIdent("PUSHBUTTON"), 7);
+				break;
 				case 8:
 					SetValue($this->GetIDForIdent("PUSHBUTTON"), 8);
 				break;
