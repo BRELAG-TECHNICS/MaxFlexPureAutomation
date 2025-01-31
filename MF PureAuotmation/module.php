@@ -188,7 +188,7 @@ class MaxFlexPureAutomation extends IPSModule {
 		}
 	}
 
-	private function SwitchLED(int $LEDnumber, int $State) {
+	public function SwitchLED(int $LEDnumber, int $State) {
 		$this->SetLED($LEDnumber -1 + $State * 8);
 	}
 
