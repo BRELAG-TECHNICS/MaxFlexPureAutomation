@@ -25,19 +25,64 @@ __Konfigurationsseite__:
 
 Name                                 | Beschreibung
 ------------------------------------ | ---------------------------------
-ID                                   | Auswahl der eingerichteten ID (Speicherpunkt im eGate)
-TimerInterval                        | Zeitdauer für die Codeeingabe
+ID                                   | Auswahl der eingerichteten ID (Speicherpunkt bei der eGate)
+Switch: "MaxFlex als Taster nutzen?" | Wenn true, wird das schaltverhalten auf Taster umgestellt.
 
 ### 4. Statusvariablen und Profile
 
-Die Statusvariablen/Kategorien werden automatisch angelegt. Das Löschen einzelner kann zu Fehlfunktionen führen. Profile werden keine benötigt.
+- Die Statusvariablen/Kategorien werden automatisch angelegt. Das Löschen einzelner kann zu Fehlfunktionen führen. 
+- Profile werden keine benötigt.
 
-##### Statusvariablen
+**Taster-Modus:**
 
-Es werden automatisch folgende Statusvariablen angelegt.
+Name        | Typ     | Beschreibung
+------------| ------- | -----------
+Pushbutton  | Integer | Zeigt für die dauer des drücken, die Tastennummer an. Beim loslassen, der Taste hat die Variable den Wert 0.
 
-Bezeichnung          | Typ     | Beschreibung
--------------------- | ------- | -----------
-Code                 | Integer | Hier wird wärend der Eingabe der Code geschriebn.
-Ist Code Ok?         | Boolean | Wird auf true gesetzt falls die Code eingabe erfolgreich war.
-Aktueller Modus      | Integer | Stellt provisorisch den gewählten Modus ein.
+Tasten sind, beginnend von der obersten Reihe, immer von links nach rechts 1 - 8 durchnummeriert.
+
+**Schalter-Modus:**
+
+Name            | Typ     | Beschreibung
+----------------| ------- | -----------
+Schalter 1 - 8  | Boolean | Beim betätigen der jeweiligen Taste, wird zwischen true und false gewechselt.
+
+Tasten sind, beginnend von der obersten Reihe, immer von links nach rechts 1 - 8 durchnummeriert.
+
+### 5. Funktionen
+
+BRELAG_SendCommand()
+
+```php
+BRELAG_SendCommand(integer $InstanzID, integer $Instruction integer $Command, integer $Value, integer $Priority);
+```
+Sendet den Wert für die Instruction (richtung) $Instruction, das Kommando $Command mit dem Wert $Value und der Priorität $Priority. Die Funktion liefert keinerlei Rückgabewert.
+```php
+// Beispiel:
+BRELAG_SendCommand(12345, 1, 0);
+```
+
+BRELAG_SwitchLED()
+```php
+BRELAG_SwitchLED(integer $LEDnumber, integer $State);
+```
+Sendet den Befehl an die LED der jeweiligen Taste $LEDnumber den Statusbefehl $State.
+- 0 = Aus
+- 1 = Leuchten
+- 2 = Blinken
+
+Die Funktion liefert keinerlei Rückgabewert.
+
+BRELAG_changeButtonValue();
+```php
+BRELAG_changeButtonValue(integer $buttonNumber);
+```
+Diese Funktion hat keinerlei auswirkungen auf den MaxFlex selbts. Es wird kein Funkbefehl abgesetzt.
+
+**Im Schalter-Modus:**
+
+Schaltet die jeweilige Schalter variable $buttonNumber um (true / false). Die Funktion liefert keinerlei Rückgabewert.
+
+**Im Taster-Modus:**
+
+Setzt den Wert $buttonNumber in die Variable "PushButton". Die Funktion liefert keinerlei Rückgabewert.
