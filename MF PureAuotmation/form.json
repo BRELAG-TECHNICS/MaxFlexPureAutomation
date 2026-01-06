@@ -2,14 +2,6 @@
   "elements":
   [
     { "type": "NumberSpinner", "name": "ID", "caption": "ID"},
-    { "type": "CheckBox", "name": "PUSHBUTTON", "caption": "MaxFlex als Taster nutzen?"},
-    { "type": "CheckBox", "name": "LED1", "caption": "LED 1 einschalten?"},
-    { "type": "CheckBox", "name": "LED2", "caption": "LED 2 einschalten?"},
-    { "type": "CheckBox", "name": "LED3", "caption": "LED 3 einschalten?"},
-    { "type": "CheckBox", "name": "LED4", "caption": "LED 4 einschalten?"},
-    { "type": "CheckBox", "name": "LED5", "caption": "LED 5 einschalten?"},
-    { "type": "CheckBox", "name": "LED6", "caption": "LED 6 einschalten?"},
-    { "type": "CheckBox", "name": "LED7", "caption": "LED 7 einschalten?"},
-    { "type": "CheckBox", "name": "LED8", "caption": "LED 8 einschalten?"}
+    { "type": "CheckBox", "name": "PUSHBUTTON", "caption": "MaxFlex als Taster nutzen?"}
   ]
 }
