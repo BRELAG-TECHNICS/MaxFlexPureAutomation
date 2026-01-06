@@ -1,4 +1,4 @@
-# Knockaut MaxFlex Codetastur
+# MaxFlex Pure Automation
 Benötigt das Knockaut Alarmanlagemodul als übergeordnete Instanz.
 
 ### Inhaltverzeichnis
