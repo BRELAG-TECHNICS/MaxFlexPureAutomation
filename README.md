@@ -10,10 +10,8 @@ Benötigt das Knockaut Alarmanlagemodul als übergeordnete Instanz.
 
 ### 1. Funktionsumfang
 
-* Liesst selbstständig der PIN vom Alarmanlagemodul aus
-* Einstellbarkeit der ID
-* Einstellbarkeit vom Zeitinterval für die Code Eingabe
-* Sortierung im Alarmanlage Modul definiert die Tastenbelegung. Beispiel: Sortierung 0 = Taste 1, Sortierung 5 = Taste 6 (Taste 7 + 8 reserviert).
+- Zur Nutzung eines MaxFlex als "unabhängiger" Steuereinheit. Beim MaxFlex muss auf allen Tasten als Funktion None und Kanal 1 eingestellt sein.
+- Die LEDs der jeweiligen Taste, können gesteuert werden.
 
 ### 2. Voraussetzungen
 
